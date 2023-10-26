@@ -62,13 +62,13 @@ function draw_M(canvas, context) {
     context.fillRect(this.x + this.width - this.line_width, canvas.height - this.y - this.height, this.line_width, this.height);
 
     context.save();
-    context.translate(this.x + this.line_width, canvas.height - this.y - this.height)
+    context.translate(this.x + this.line_width, canvas.height - this.y - this.height);
     context.rotate((-20 * Math.PI) / 180);
     context.fillRect(-this.line_width, 0, this.line_width, this.height);
     context.restore();
 
     context.save();
-    context.translate(this.x + this.width - this.line_width, canvas.height - this.y - this.height)
+    context.translate(this.x + this.width - this.line_width, canvas.height - this.y - this.height);
     context.rotate((20 * Math.PI) / 180);
     context.fillRect(0, 0, this.line_width, this.height);
     context.restore();
@@ -79,7 +79,7 @@ function draw_I(canvas, context) {
     context.fillRect(this.x + this.width - this.line_width, canvas.height - this.y - this.height, this.line_width, this.height);
 
     context.save();
-    context.translate(this.x + this.width - this.line_width, canvas.height - this.y - this.height)
+    context.translate(this.x + this.width - this.line_width, canvas.height - this.y - this.height);
     context.rotate((36.5 * Math.PI) / 180);
     context.fillRect(0, 0, this.line_width, this.height * 1.12);
     context.restore();

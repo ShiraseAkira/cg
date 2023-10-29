@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor</title>
+    <style>
+        #canvas {
+            border: 1px solid #000;
+            display: block;
+            margin: 0 auto;
+
+            background-image:
+                linear-gradient(45deg, #cccccc 25%, transparent 25%), 
+                linear-gradient(135deg, #cccccc 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #cccccc 75%),
+                linear-gradient(135deg, transparent 75%, #cccccc 75%);
+            background-size:20px 20px;
+            background-position:0 0, 10px 0, 10px -10px, 0px 10px;
+        }
+        #imageFile {
+            display: none;
+        }
+        .modal-wrapper {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background: rgba(150, 150, 150, 0.8);
+        }
+        .modal {
+            width: 50vw;
+            height: 50vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            background: #cccccc;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="script.js"></script> 
+</head>
+<body>
+    <button id="new">New</button>
+    <button id="open">Open</button>
+    <button id="save">Save</button>
+    <input class="hidden" type="file" id="file">
+
+    <input type="color" id="color">
+    <input type="number" id="drawWidth" value="2" min="1" max="20" step="1">
+
+    <canvas id="canvas" width="800" height="800"></canvas>
+
+    <div class="modal-wrapper hidden" id="newModal">
+        <div class="modal">
+            <label>
+                Width
+                <input type="number" id="width" value="800" class="dialog-input">
+            </label>
+            <label>
+                Height
+                <input type="number" id="height" value="800" class="dialog-input">
+            </label>
+            <div>
+                <button id="newCreate">Create</button>
+                <button id="newCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-wrapper hidden" id="saveModal">
+        <div class="modal">
+            <div>
+                <input type="text" id="fileName" value="Безымянный">
+                <select name="type" id="type">
+                    <option value="image/png" selected>.png</option>
+                    <option value="image/bmp">.bmp</option>
+                    <option value="image/jpeg">.jpeg</option>
+                </select>
+            </div>
+            <div>
+                <button id="saveCreate">Create</button>
+                <button id="saveCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -55,30 +55,14 @@ function drawCircle() {
 
 function fillLine(xc, yc, x, y) {
     for(let i = 1; i <= y; i++) {
-        if (pixelIsOnScreenAfterTranslation(xc + x, yc + y - i)) {
-            drawPixelIfOnScreen(xc + x, yc + y - i);
-        }   
-        if (pixelIsOnScreenAfterTranslation(xc - x, yc + y - i)) {
-            drawPixelIfOnScreen(xc - x, yc + y - i);
-        } 
-        if (pixelIsOnScreenAfterTranslation(xc + x, yc - y + i)) {
+            drawPixelIfOnScreen(xc + x, yc + y - i);  
+            drawPixelIfOnScreen(xc - x, yc + y - i); 
             drawPixelIfOnScreen(xc + x, yc - y + i);
-        }
-        if (pixelIsOnScreenAfterTranslation(xc - x, yc - y + i)) {
             drawPixelIfOnScreen(xc - x, yc - y + i);
-        }
-        if (pixelIsOnScreenAfterTranslation(xc + y - i, yc + x)) {
             drawPixelIfOnScreen(xc + y - i, yc + x);
-        }
-        if (pixelIsOnScreenAfterTranslation(xc - y + i, yc + x)) {
             drawPixelIfOnScreen(xc - y + i, yc + x);
-        }
-        if (pixelIsOnScreenAfterTranslation(xc + y - i, yc - x)) {
-            drawPixelIfOnScreen(xc + y - i, yc - x);
-        }
-        if (pixelIsOnScreenAfterTranslation(xc - y + i, yc - x)) {
+            drawPixelIfOnScreen(xc + y - i, yc - x);        
             drawPixelIfOnScreen(xc - y + i, yc - x);
-        } 
     }
 }
 

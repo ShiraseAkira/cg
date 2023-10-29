@@ -269,8 +269,6 @@ window.addEventListener("load", () => {
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
 
-    // context.scale(0.5, 0.5);
-
     canvas.addEventListener('mousedown', (e) => {
         posX = e.offsetX;
         posY = e.offsetY;

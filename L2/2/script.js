@@ -57,7 +57,7 @@ function initDrawing(canvas, context) {
     });
 }
 
-function initDrawingControls(canvas, context) {
+function initDrawingControls(context) {
     const colorPicker = document.getElementById("color");
     const widthPicker = document.getElementById("drawWidth");
 
@@ -65,7 +65,7 @@ function initDrawingControls(canvas, context) {
     widthPicker.addEventListener("change", (e) => context.lineWidth = e.target.value);
 }
 
-function initCreateControls(canvas, context) {
+function initCreate(canvas, context) {
     const newButton = document.getElementById("new");
     const newDialog = document.getElementById("newModal");
     const newCreate = document.getElementById("newCreate");
@@ -128,8 +128,8 @@ function initSave(canvas) {
 window.addEventListener("load", () => {
     const [canvas, context] = initCanvas();
     initDrawing(canvas, context);
-    initDrawingControls(canvas, context);
-    initCreateControls(canvas, context);
+    initDrawingControls(context);
+    initCreate(canvas, context);
     initOpen(canvas, context);
     initSave(canvas);
 });

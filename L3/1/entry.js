@@ -32,8 +32,8 @@ async function main() {
     const controlPoints = [
         new ControlPoint(-50, -50),
         new ControlPoint(-50, 50),
-        new ControlPoint(50, 30),
-        new ControlPoint(40, -50)];
+        new ControlPoint(50, 50),
+        new ControlPoint(50, -50)];
 
     let canvasWidth;
     let canvasHeight;
@@ -63,9 +63,6 @@ async function main() {
                 if (controlPoints[i].isInBoundingBox(posX, posY)) {
                     controlPoint = controlPoints[i];
                     isDragging = true;
-                    console.log(`point num ${i}`, 
-                        e.offsetX - canvas.clientWidth / 2,
-                     e.offsetY - canvas.clientHeight / 2);
                     break;
                 }
             }

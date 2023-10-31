@@ -34,7 +34,7 @@ const angleStep = Math.PI / 60;
 
 function speedUp (body) {
     body.vx *= speedScaleFactor;
-    body.vx *= speedScaleFactor;
+    body.vy *= speedScaleFactor;
 }
 
 function slowDown(body) {
@@ -81,6 +81,7 @@ async function main() {
             if (e.code === "Space") {
                 toggleSimulation();
                 if(getSimulationState()) {
+                    console.log(bodies[1]);
                     initialBodyState = JSON.parse(JSON.stringify(bodies));
                 } else {
                     bodies[0] = new CelestialBody(...Object.values(initialBodyState[0]));

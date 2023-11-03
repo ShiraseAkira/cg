@@ -22,6 +22,7 @@ class Letter {
         this.line_width = LINE_WIDTH;
         this.color = color;
         this.drawStrategy = drawStrategy;
+        this.isJumping = false;
     }
 
     draw(canvas, context) {
@@ -90,20 +91,17 @@ function drawFrame() {
     const context = canvas.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-
+   
     for (let i = 0; i < letters.length; i++) {
+        if (letters[i].isJumping) {
+            letters[i].updateLetterPositions();
+        }
         letters[i].draw(canvas, context)
-    }
-    
-    for (let i = 0; i < jumpingLetters.length; i++) {
-        jumpingLetters[i].updateLetterPositions();
-        jumpingLetters[i].draw(canvas, context)
     }
     window.requestAnimationFrame(drawFrame);
 }
 
 const letters = [];
-const jumpingLetters = [];
 
 function init() {
     letters.push(new Letter (0, 0, BLUE, draw_L));
@@ -112,7 +110,7 @@ function init() {
 
 
     for (let i = 0; i < letters.length; i++) {
-        setTimeout(() => jumpingLetters.push(letters.pop()), DELAY * i);
+        setTimeout(() => letters[i].isJumping = true, DELAY * i);
     }
 
     window.requestAnimationFrame(drawFrame);

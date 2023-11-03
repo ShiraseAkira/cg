@@ -7,7 +7,7 @@ let borderColor, fillColor;
 let xmin, xmax, ymin, ymax;
 
 
-function pixelIsOnScreenAfterTranslation(x, y) {
+function isPixelOnScreenAfterTranslation(x, y) {
     let xbounds = (translateX >= 0) ?
                     (x >= xmin) && (x <= xmax - translateX) :
                     (x >= xmin - translateX) && (x <= xmax);
@@ -20,7 +20,7 @@ function pixelIsOnScreenAfterTranslation(x, y) {
 }
 
 function drawPixelIfOnScreen(x, y) {
-    if (pixelIsOnScreenAfterTranslation(x, y))  {
+    if (isPixelOnScreenAfterTranslation(x, y))  {
         context.fillRect(x, y, 1, 1);
     }
 }

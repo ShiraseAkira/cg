@@ -96,8 +96,8 @@ export async function initRenderer(canvas) {
                 false,
                 0,
                 0
-                );
-            }
+            );
+        }
             
         gl.bufferData(
             gl.ARRAY_BUFFER,
@@ -110,10 +110,8 @@ export async function initRenderer(canvas) {
             gl.ARRAY_BUFFER,
             curvePoints,
             gl.DYNAMIC_DRAW
-        );        
-
+        );
         gl.drawArrays(gl.LINE_STRIP, 0, curvePointsCount);
-
 
 
         gl.useProgram(programDashed);

@@ -6,6 +6,7 @@ function initCanvas() {
     return [canvas, context];
 }
 
+//update element context according to drawing inputs
 function updateContext(context) {
     const colorPicker = document.getElementById("color");
     const widthPicker = document.getElementById("drawWidth");
@@ -51,7 +52,7 @@ function initDrawing(canvas, context) {
     });
     canvas.addEventListener('mousemove', (e) => {
         if(isDrawing) {
-            context.lineTo(e.offsetX + 1, e.offsetY + 1);
+            context.lineTo(e.offsetX, e.offsetY);
             context.stroke();
         }
     });
@@ -65,7 +66,7 @@ function initDrawingControls(context) {
     widthPicker.addEventListener("change", (e) => context.lineWidth = e.target.value);
 }
 
-function initCreate(canvas, context) {
+function initCreateDialog(canvas, context) {
     const newButton = document.getElementById("new");
     const newDialog = document.getElementById("newModal");
     const newCreate = document.getElementById("newCreate");
@@ -85,7 +86,7 @@ function initCreate(canvas, context) {
     });
 }
 
-function initOpen(canvas, context) {
+function initOpenDialog(canvas, context) {
     function drawImage() {
         canvas.width = img.width;
         canvas.height = img.height;
@@ -104,7 +105,7 @@ function initOpen(canvas, context) {
     openButton.addEventListener("click", () => inputFile.click());
 }
 
-function initSave(canvas) {
+function initSaveDialog(canvas) {
     const saveButton = document.getElementById("save");
     const saveDialog = document.getElementById("saveModal");
     const saveCreate = document.getElementById("saveCreate");
@@ -129,7 +130,7 @@ window.addEventListener("load", () => {
     const [canvas, context] = initCanvas();
     initDrawing(canvas, context);
     initDrawingControls(context);
-    initCreate(canvas, context);
-    initOpen(canvas, context);
-    initSave(canvas);
+    initCreateDialog(canvas, context);
+    initOpenDialog(canvas, context);
+    initSaveDialog(canvas);
 });

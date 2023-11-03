@@ -61,12 +61,11 @@ async function main() {
 
     let canvasWidth;
     let canvasHeight;
-    let initialBodyState;
 
     const bodies = [new CelestialBody(0, 0, 0, 0, 10, 100),
                     new CelestialBody(-100, -100, 50, 0, 1, 50)];
 
-    const { getData, tick, toggleSimulation, getSimulationState, setBodies } = await initPhysics(...bodies);
+    const { getData, tick, toggleSimulation } = await initPhysics(...bodies);
     const { render } = await initRenderer(canvas);
 
     {
@@ -77,26 +76,16 @@ async function main() {
         window.addEventListener('resize', resizeHandler);
         resizeHandler();
 
-        const spaceDownHandler = (e) => {
-            if (e.code === "Space") {
-                toggleSimulation();
-                if(getSimulationState()) {
-                    initialBodyState = JSON.parse(JSON.stringify(bodies));
-                } else {
-                    bodies[0] = new CelestialBody(...Object.values(initialBodyState[0]));
-                    bodies[1] = new CelestialBody(...Object.values(initialBodyState[1]));
-                    setBodies(bodies);
-                }
-            }
-
+        const keyDownHandler = (e) => {
             switch(e.code) {
+                case "Space": toggleSimulation(); break;
                 case "ArrowLeft": turnLeft(bodies[1]); break;
                 case "ArrowRight":turnRight(bodies[1]); break;
                 case "ArrowUp": speedUp(bodies[1]); break;
                 case "ArrowDown": slowDown(bodies[1]); break;
             }
         }
-        window.addEventListener("keydown", spaceDownHandler);
+        window.addEventListener("keydown", keyDownHandler);
     }
 
     {
@@ -114,7 +103,6 @@ async function main() {
                     break;
                 }
             }
-
         }
         canvas.addEventListener('mousedown', mouseDownHandler);
         canvas.addEventListener('mouseup', () => isDragging = false);
@@ -123,10 +111,8 @@ async function main() {
             if(isDragging) {
                 let deltaX = e.offsetX - posX - canvas.clientWidth / 2;
                 let deltaY = e.offsetY - posY - canvas.clientHeight / 2;
-
                 body.x += deltaX;
                 body.y += deltaY;
-
                 posX += deltaX;
                 posY += deltaY;
             }

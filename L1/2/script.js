@@ -286,7 +286,7 @@ window.addEventListener("load", () => {
             posX += deltaX;
             posY += deltaY;
 
-            window.requestAnimationFrame(redraw);
+            redraw();
         }
     });
 

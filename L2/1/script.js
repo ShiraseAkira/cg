@@ -26,8 +26,6 @@ window.addEventListener("load", () => {
     fileInput.addEventListener("change", (e) => {
         img.addEventListener("load", drawImage);
         img.src = URL.createObjectURL(e.target.files[0]);
-
-        window.requestAnimationFrame(redraw);
     });
 
     function drawImage() {
@@ -42,5 +40,9 @@ window.addEventListener("load", () => {
         
         drawImage();
         window.requestAnimationFrame(redraw);
+        //todo less idle animations;
+        //todo object coords;
     }
+
+    redraw();
 });

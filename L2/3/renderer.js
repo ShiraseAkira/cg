@@ -1,13 +1,31 @@
 export async function initRenderer(canvas) {
     const ctx = canvas.getContext('2d');
-    const sky = new Image();
-    sky.src = "./images/sky.jpg";
-    const earth = new Image();
-    earth.src = "./images/earth.png";
-    const moon = new Image();
-    moon.src = "./images/moon.png";
-    const expl = new Image();
-    expl.src = "./images/explosion.jpg";
+
+    const imageSrcs = [
+        "./images/sky.jpg",
+        "./images/earth.png",
+        "./images/moon.png",
+        "./images/explosion.jpg"
+    ];
+    async function loadImages() {
+        const promiseArray = [];
+        const imageArray = [];
+
+        for(let src of imageSrcs) {
+            promiseArray.push(new Promise(resolve => {
+                const img = new Image();
+                img.addEventListener('load', resolve);
+                img.src = src;
+                imageArray.push(img);
+            }));        
+        }
+
+        await Promise.all(promiseArray);
+
+        return imageArray;
+    }
+
+    let [sky, earth, moon, expl] = await loadImages();
 
     function drawArrow(fromx, fromy, tox, toy) {
         const headlen = 10;
@@ -47,7 +65,7 @@ export async function initRenderer(canvas) {
         ctx.drawImage(earth, data.earth.x - data.earth.size / 2, data.earth.y - data.earth.size / 2, data.earth.size, data.earth.size);
         ctx.drawImage(moon, data.moon.x - data.moon.size / 2, data.moon.y - data.moon.size / 2, data.moon.size, data.moon.size);
 
-        if (!data.state) {            
+        if (!data.isSimulating) {            
             drawArrow(data.moon.x, data.moon.y, data.moon.x + data.moon.vx, data.moon.y + data.moon.vy);
         }
     }

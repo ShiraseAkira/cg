@@ -38,7 +38,7 @@ async function main() {
     const bodies = [new CelestialBody(0, 0, 0, 0, 10, 100),
                     new CelestialBody(-100, -100, 50, 0, 1, 50)];
 
-    const { getData, tick, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW } = await initPhysics(...bodies);
+    const { getData, updateBodies, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW } = initPhysics(...bodies);
     const { render } = await initRenderer(canvas);
 
     {
@@ -50,12 +50,18 @@ async function main() {
         resizeHandler();
 
         const keyDownHandler = (e) => {
-            switch(e.code) {
-                case "Space": toggleSimulation(); break;
-                case "ArrowLeft": turnSpeedVectorCCW(bodies[1]); break;
-                case "ArrowRight":turnSpeedVectorCW(bodies[1]); break;
-                case "ArrowUp": speedUp(bodies[1]); break;
-                case "ArrowDown": speedDown(bodies[1]); break;
+            if (e.code === "Space") {
+                toggleSimulation(); 
+                frame();
+            }
+            
+            if(!getData().isSimulating) {
+                switch(e.code) {
+                    case "ArrowLeft": turnSpeedVectorCCW(bodies[1]); frame(); break;
+                    case "ArrowRight":turnSpeedVectorCW(bodies[1]); frame(); break;
+                    case "ArrowUp": speedUp(bodies[1]); frame(); break;
+                    case "ArrowDown": speedDown(bodies[1]); frame(); break;
+                }
             }
         }
         window.addEventListener("keydown", keyDownHandler);
@@ -81,27 +87,29 @@ async function main() {
         canvas.addEventListener('mouseup', () => isDragging = false);
 
         const mouseMoveHandler = (e) => {
-            if(isDragging) {
+            if(isDragging && !getData().isSimulating) {
                 let deltaX = e.offsetX - posX - canvas.clientWidth / 2;
                 let deltaY = e.offsetY - posY - canvas.clientHeight / 2;
                 body.x += deltaX;
                 body.y += deltaY;
                 posX += deltaX;
                 posY += deltaY;
+                frame();
             }
         }
         canvas.addEventListener('mousemove', mouseMoveHandler);
     }
 
-    {
-        const frame = () => {
+    
+    const frame = () => {
+        render(getData(), canvasWidth, canvasHeight);
+        if (getData().isSimulating){
+            updateBodies();
             requestAnimationFrame(frame);
-
-            tick();
-            render(getData(), canvasWidth, canvasHeight);
         }
-        frame();
     }
+    frame();
+    
 };
 
 main();

@@ -1,4 +1,4 @@
-export async function initPhysics(body1, body2) {
+export function initPhysics(body1, body2) {
     const G = 500;
     const speedScaleFactor = 1.1;
     const angleStep = Math.PI / 60;
@@ -11,22 +11,20 @@ export async function initPhysics(body1, body2) {
         return { 
             earth: body1, 
             moon: body2, 
-            state: isSimulating, 
+            isSimulating: isSimulating, 
             hasExploded: hasExploded 
         };
     }
 
     function updateBody(body, distanceVecNorm, force) {
-        if (isSimulating) {
-            const acceleration = force / body.mass;
-            body.x += body.vx / 10;
-            body.y += body.vy / 10;
-            body.vx += distanceVecNorm[0] * acceleration;
-            body.vy += distanceVecNorm[1] * acceleration;
-        }
+        const acceleration = force / body.mass;
+        body.x += body.vx / 10;
+        body.y += body.vy / 10;
+        body.vx += distanceVecNorm[0] * acceleration;
+        body.vy += distanceVecNorm[1] * acceleration;
     }
 
-    function tick() {
+    function updateBodies() {
         const distanceVec = [body2.x - body1.x, body2.y - body1.y];
         const R = Math.sqrt(distanceVec[0] * distanceVec[0] + distanceVec[1] * distanceVec[1]);
 
@@ -76,5 +74,5 @@ export async function initPhysics(body1, body2) {
         body.vy = vx * Math.sin(-angleStep) + vy * Math.cos(-angleStep);
     }
 
-    return { getData, tick, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW };
+    return { getData, updateBodies, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW };
 };

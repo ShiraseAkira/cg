@@ -78,14 +78,14 @@ window.addEventListener("load", () => {
     function initDialogNewControls() {
         const newButton = document.getElementById("new");
         const newDialog = document.getElementById("newModal");
-        const newCreate = document.getElementById("newCreate");
-        const newCancel = document.getElementById("newCancel");
+        const newCreateButton = document.getElementById("newCreate");
+        const newCancelButton = document.getElementById("newCancel");
 
         const inputs = newDialog.getElementsByClassName("dialog-input");
 
         newButton.addEventListener("click", () => newDialog.classList.toggle("hidden"));
-        newCancel.addEventListener("click", () => newDialog.classList.toggle("hidden"));
-        newCreate.addEventListener("click", () => {
+        newCancelButton.addEventListener("click", () => newDialog.classList.toggle("hidden"));
+        newCreateButton.addEventListener("click", () => {
             canvas.width = inputs[0].value;
             canvas.height = inputs[1].value;
             
@@ -117,8 +117,8 @@ window.addEventListener("load", () => {
     function initDialogSaveControls() {
         const saveButton = document.getElementById("save");
         const saveDialog = document.getElementById("saveModal");
-        const saveCreate = document.getElementById("saveCreate");
-        const saveCancel = document.getElementById("saveCancel");
+        const saveSaveButton = document.getElementById("saveCreate");
+        const saveCancelButton = document.getElementById("saveCancel");
 
         const fileNameImput = document.getElementById("fileName");
         const fileTypeInput = document.getElementById("type");
@@ -126,8 +126,8 @@ window.addEventListener("load", () => {
         const link = document.createElement("a");
 
         saveButton.addEventListener("click", () => saveDialog.classList.toggle("hidden"));
-        saveCancel.addEventListener("click", () => saveDialog.classList.toggle("hidden"));
-        saveCreate.addEventListener("click", () => {
+        saveCancelButton.addEventListener("click", () => saveDialog.classList.toggle("hidden"));
+        saveSaveButton.addEventListener("click", () => {
             link.download = fileNameImput.value + fileTypeInput.options[fileTypeInput.selectedIndex].text;
             link.href = canvas.toDataURL(fileTypeInput.value);
             link.click();

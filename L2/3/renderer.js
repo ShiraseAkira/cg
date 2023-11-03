@@ -9,16 +9,20 @@ export async function initRenderer(canvas) {
     const expl = new Image();
     expl.src = "./images/explosion.jpg";
 
-    function drawArrow(context, fromx, fromy, tox, toy) {
+    function drawArrow(fromx, fromy, tox, toy) {
         const headlen = 10;
         const dx = tox - fromx;
         const dy = toy - fromy;
         const angle = Math.atan2(dy, dx);
-        context.moveTo(fromx, fromy);
-        context.lineTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-        context.moveTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+
+        ctx.beginPath();
+        ctx.moveTo(fromx, fromy);
+        ctx.lineTo(tox, toy);
+        ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+        ctx.moveTo(tox, toy);
+        ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+        ctx.closePath();
+        ctx.stroke();
     }
 
     function render (data, width, height) {
@@ -43,11 +47,8 @@ export async function initRenderer(canvas) {
         ctx.drawImage(earth, data.earth.x - data.earth.size / 2, data.earth.y - data.earth.size / 2, data.earth.size, data.earth.size);
         ctx.drawImage(moon, data.moon.x - data.moon.size / 2, data.moon.y - data.moon.size / 2, data.moon.size, data.moon.size);
 
-        if (!data.state) {
-            ctx.beginPath();
-            drawArrow(ctx, data.moon.x, data.moon.y, data.moon.x + data.moon.vx, data.moon.y + data.moon.vy)
-            ctx.closePath();
-            ctx.stroke();
+        if (!data.state) {            
+            drawArrow(data.moon.x, data.moon.y, data.moon.x + data.moon.vx, data.moon.y + data.moon.vy);
         }
     }
 

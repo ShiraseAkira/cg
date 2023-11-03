@@ -29,33 +29,6 @@ class CelestialBody {
     }
 }
 
-const speedScaleFactor = 1.1;
-const angleStep = Math.PI / 60;
-
-function speedUp (body) {
-    body.vx *= speedScaleFactor;
-    body.vy *= speedScaleFactor;
-}
-
-function slowDown(body) {
-    body.vx /= speedScaleFactor;
-    body.vy /= speedScaleFactor;
-}
-
-function turnLeft(body) {
-    const vx = body.vx;
-    const vy = body.vy;
-    body.vx = vx * Math.cos(angleStep) - vy * Math.sin(angleStep);
-    body.vy = vx * Math.sin(angleStep) + vy * Math.cos(angleStep);
-}
-
-function turnRight(body) {
-    const vx = body.vx;
-    const vy = body.vy;
-    body.vx = vx * Math.cos(-angleStep) - vy * Math.sin(-angleStep);
-    body.vy = vx * Math.sin(-angleStep) + vy * Math.cos(-angleStep);
-}
-
 async function main() {
     const canvas = document.getElementById("canvas");
 
@@ -65,7 +38,7 @@ async function main() {
     const bodies = [new CelestialBody(0, 0, 0, 0, 10, 100),
                     new CelestialBody(-100, -100, 50, 0, 1, 50)];
 
-    const { getData, tick, toggleSimulation } = await initPhysics(...bodies);
+    const { getData, tick, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW } = await initPhysics(...bodies);
     const { render } = await initRenderer(canvas);
 
     {
@@ -79,10 +52,10 @@ async function main() {
         const keyDownHandler = (e) => {
             switch(e.code) {
                 case "Space": toggleSimulation(); break;
-                case "ArrowLeft": turnLeft(bodies[1]); break;
-                case "ArrowRight":turnRight(bodies[1]); break;
+                case "ArrowLeft": turnSpeedVectorCCW(bodies[1]); break;
+                case "ArrowRight":turnSpeedVectorCW(bodies[1]); break;
                 case "ArrowUp": speedUp(bodies[1]); break;
-                case "ArrowDown": slowDown(bodies[1]); break;
+                case "ArrowDown": speedDown(bodies[1]); break;
             }
         }
         window.addEventListener("keydown", keyDownHandler);

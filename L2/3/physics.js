@@ -1,5 +1,8 @@
 export async function initPhysics(body1, body2) {
     const G = 500;
+    const speedScaleFactor = 1.1;
+    const angleStep = Math.PI / 60;
+
     let isSimulating = false;
     let hasExploded = false;
     let ititialBodiesState;
@@ -48,6 +51,30 @@ export async function initPhysics(body1, body2) {
         isSimulating = !isSimulating;
         hasExploded = false;
     }
+    
+    function speedUp (body) {
+        body.vx *= speedScaleFactor;
+        body.vy *= speedScaleFactor;
+    }
 
-    return { getData , tick, toggleSimulation};
+    function speedDown(body) {
+        body.vx /= speedScaleFactor;
+        body.vy /= speedScaleFactor;
+    }
+
+    function turnSpeedVectorCW(body) {
+        const vx = body.vx;
+        const vy = body.vy;
+        body.vx = vx * Math.cos(angleStep) - vy * Math.sin(angleStep);
+        body.vy = vx * Math.sin(angleStep) + vy * Math.cos(angleStep);
+    }
+
+    function turnSpeedVectorCCW(body) {
+        const vx = body.vx;
+        const vy = body.vy;
+        body.vx = vx * Math.cos(-angleStep) - vy * Math.sin(-angleStep);
+        body.vy = vx * Math.sin(-angleStep) + vy * Math.cos(-angleStep);
+    }
+
+    return { getData, tick, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW };
 };

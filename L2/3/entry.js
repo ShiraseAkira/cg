@@ -1,5 +1,6 @@
 import { initPhysics } from './physics.js';
 import { initRenderer } from './renderer.js';
+import { initSound } from './sound.js';
 
 class CelestialBody {
     constructor(x, y, vx, vy, mass, r) {
@@ -40,6 +41,7 @@ async function main() {
 
     const { getData, updateBodies, toggleSimulation, speedUp, speedDown, turnSpeedVectorCCW, turnSpeedVectorCW } = initPhysics(...bodies);
     const { render } = await initRenderer(canvas);
+    const { playExplosionSoundIfNeeded } = await initSound();
 
     {
         const resizeHandler = () => {
@@ -103,6 +105,7 @@ async function main() {
     
     const frame = () => {
         render(getData(), canvasWidth, canvasHeight);
+        playExplosionSoundIfNeeded(getData());
         if (getData().isSimulating){
             updateBodies();
             requestAnimationFrame(frame);

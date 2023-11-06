@@ -54,7 +54,7 @@ export async function initRenderer(canvas) {
             ctx.lineCap = 'round'
         }
 
-        if (data.hasExploded) {
+        if (data.isCollapsed) {
             ctx.drawImage(expl, -width / 2, -height / 2);
             return;
         }

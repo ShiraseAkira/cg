@@ -4,7 +4,7 @@ export function initPhysics(body1, body2) {
     const angleStep = Math.PI / 60;
 
     let isSimulating = false;
-    let hasExploded = false;
+    let isCollapsed = false;
     let ititialBodiesState;
 
     function getData() {
@@ -12,7 +12,7 @@ export function initPhysics(body1, body2) {
             earth: body1, 
             moon: body2, 
             isSimulating: isSimulating, 
-            hasExploded: hasExploded 
+            isCollapsed: isCollapsed 
         };
     }
 
@@ -29,7 +29,7 @@ export function initPhysics(body1, body2) {
         const R = Math.sqrt(distanceVec[0] * distanceVec[0] + distanceVec[1] * distanceVec[1]);
 
         if (R < (body1.size + body2.size) / 2) {
-            hasExploded = true;
+            isCollapsed = true;
         }
 
         const distanceVecNorm = [distanceVec[0] / R, distanceVec[1] / R];
@@ -47,7 +47,7 @@ export function initPhysics(body1, body2) {
             [body1.x, body1.y, body1.vx, body1.vy, body2.x, body2.y, body2.vx, body2.vy] = [...ititialBodiesState];
         }
         isSimulating = !isSimulating;
-        hasExploded = false;
+        isCollapsed = false;
     }
     
     function speedUp (body) {
